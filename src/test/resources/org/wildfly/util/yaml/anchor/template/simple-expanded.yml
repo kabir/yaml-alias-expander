@@ -1,0 +1,23 @@
+name: My example
+children:
+  one:
+    env:
+      MY_VAR: 1
+      entries:
+        - name: echo
+          run: echo ${MY_VAR}
+          "on": production
+  two:
+    env:
+      MY_VAR: 2
+      entries:
+        - name: echo
+          run: echo ${MY_VAR}
+          "on": production
+  three:
+    env:
+      MY_VAR: 3
+      entries:
+        - name: echo
+          run: echo ${MY_VAR}
+          "on": production

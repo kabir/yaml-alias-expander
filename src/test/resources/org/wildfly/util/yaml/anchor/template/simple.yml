@@ -1,0 +1,21 @@
+defaults: &default-child-contents
+  entries:
+    - name: echo
+      run: echo ${MY_VAR}
+      # 'on' needs to be quoted, or the processor will translate it to 'true'
+      "on": production
+
+name: My example
+children:
+  one:
+    env:
+      MY_VAR: 1
+      <<: *default-child-contents
+  two:
+    env:
+      MY_VAR: 2
+      <<: *default-child-contents
+  three:
+    env:
+      MY_VAR: 3
+      <<: *default-child-contents

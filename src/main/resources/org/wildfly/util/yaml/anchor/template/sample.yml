@@ -1,0 +1,19 @@
+name: Galleon Pack Template Java CI
+
+on: [push, pull_request]
+
+jobs:
+  # This just runs mvn install like a user would on cloning the repository
+  raw:
+    name: Normal checkout
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/cache@v1
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-
