@@ -1,9 +1,11 @@
-defaults: &default-child-contents
+x-defaults: &default-child-contents
   entries:
     - name: echo
       run: echo ${MY_VAR}
       # 'on' needs to be quoted, or the processor will translate it to 'true'
       "on": production
+x-more: &more
+      more: and more
 
 name: My example
 children:
@@ -11,11 +13,14 @@ children:
     env:
       MY_VAR: 1
       <<: *default-child-contents
+      <<: *more
   two:
     env:
       MY_VAR: 2
       <<: *default-child-contents
+      <<: *more
   three:
     env:
       MY_VAR: 3
       <<: *default-child-contents
+      <<: *more

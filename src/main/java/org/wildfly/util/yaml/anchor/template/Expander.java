@@ -6,8 +6,10 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Set;
 import java.util.function.Function;
 
 import org.yaml.snakeyaml.DumperOptions;
@@ -49,7 +51,15 @@ public class Expander {
         // Load it up again and remove the 'defaults' entry
         o = yaml.load(out);
         LinkedHashMap<String, ?> map = (LinkedHashMap<String, ?>) o;
-        map.remove("defaults");
+        Set<String> anchorKeys = new HashSet<>();
+        for (String key : map.keySet()) {
+            if (key.startsWith("x-")) {
+                anchorKeys.add(key);
+            }
+        }
+        for (String key : anchorKeys) {
+            map.remove(key);
+        }
 
         out = yaml.dump(map);
 
