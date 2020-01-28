@@ -1,6 +1,8 @@
 # yaml-alias-expander
 
 This is a simple processor which takes a YAML file with anchors and aliases is input and outputs a new YAML file with the aliases 'expanded'.
+The main intended use for this is setting up CI on GitHub Actions, their YAML parser does
+not handle anchors and aliases.
 
 ## Usage
 Download the latest [release](https://github.com/kabir/yaml-alias-expander/releases).
@@ -10,8 +12,10 @@ Then run:
 java -jar /path/to/yaml-alias-expander-x.y.z.jar /path/to/input.yml /path/to/output.yml
 ```
 
-In the input file, keys that contain an anchor need to start with `x-`. An input file 
-with anchors and aliases that looks like:
+In the input file, keys that contain an anchor should start with `x-` (They will be inserted even if they
+keys dont' start with and `x-`, but only entries whose key start with `x-` are removed from the resulting YAML)
+
+An input file with anchors and aliases that looks like:
 ```
 x-defaults: &default-child-contents
   entries:
