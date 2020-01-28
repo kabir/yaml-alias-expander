@@ -95,20 +95,6 @@ public class Expander {
         }
     }
 
-    static String readFile(File file) throws Exception {
-        StringBuilder sb = new StringBuilder();
-        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
-            String line = reader.readLine();
-            while (line != null) {
-                sb.append(line);
-                sb.append("\n");
-                line = reader.readLine();
-            }
-        }
-        return sb.toString();
-    }
-
-
     // Taken from https://stackoverflow.com/questions/18202548/java-snakeyaml-prevent-dumping-reference-names
     private class NonAnchorRepresenter extends Representer {
 
