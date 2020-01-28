@@ -25,9 +25,9 @@ import org.yaml.snakeyaml.representer.Representer;
  */
 public class Expander {
 
-    private final String input;
+    private final File input;
 
-    public Expander(String input) {
+    public Expander(File input) {
         this.input = input;
     }
 
@@ -40,7 +40,7 @@ public class Expander {
         Yaml yaml = new Yaml(new Constructor(), new NonAnchorRepresenter(), options);
         Object o;
         try {
-            o = yaml.load(new FileReader(new File(input)));
+            o = yaml.load(new FileReader(input));
         } catch (FileNotFoundException e) {
             throw new IllegalStateException("Specified input file '" + input + "' does not exist.");
         }
@@ -80,8 +80,17 @@ public class Expander {
             throw new IllegalStateException("The input and output files can't be the same");
         }
 
+        Expander expander = new Expander(new File(args[0]));
+        String expanded = expander.expandInput();
+
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(new File(args[1])))) {
+            writer.write(expanded);
+        }
+    }
+
+    static String readFile(File file) throws Exception {
         StringBuilder sb = new StringBuilder();
-        try (BufferedReader reader = new BufferedReader(new FileReader(new File(args[0])))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
             String line = reader.readLine();
             while (line != null) {
                 sb.append(line);
@@ -89,13 +98,7 @@ public class Expander {
                 line = reader.readLine();
             }
         }
-
-        Expander expander = new Expander(sb.toString());
-        String expanded = expander.expandInput();
-
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(new File(args[1])))) {
-            writer.write(expanded);
-        }
+        return sb.toString();
     }
 
 
