@@ -1,6 +1,7 @@
 name: Java CI
 on:
   - push
+  - pull_request
 env:
   MAVEN_OPTS: "-Xms756M -Xmx1g"
   # Here we skip the tests for quick building in the 'Build' step
