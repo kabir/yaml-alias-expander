@@ -1,3 +1,4 @@
+![Java CI](https://github.com/kabir/yaml-alias-expander/workflows/Java%20CI/badge.svg)
 # yaml-alias-expander
 
 This is a simple processor which takes a YAML file with anchors and aliases is input and outputs a new YAML file with the aliases 'expanded'.

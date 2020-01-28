@@ -2,11 +2,6 @@ name: Java CI
 on:
   - push
   - pull_request
-env:
-  MAVEN_OPTS: "-Xms756M -Xmx1g"
-  # Here we skip the tests for quick building in the 'Build' step
-  MAVEN_BUILD_PARAMS: "-DskipTests -Dmaven.test.failure.ignore=true -DfailIfNoTests=false -Djboss.test.transformers.eap -Dci-cleanup=true -DlegacyBuild -DlegacyRelease -fae"
-  MAVEN_TEST_PARAMS: "-Dmaven.test.failure.ignore=true -DfailIfNoTests=false -Dipv6 -Djboss.test.transformers.eap -Dci-cleanup=true -fae"
 jobs:
   build:
     name: Build Server
@@ -32,14 +27,6 @@ jobs:
         run: zip -R artifacts.zip 'surefire-reports/*.txt' 'surefire-reports/*.xml'
       - uses: actions/upload-artifact@v1
         with:
-          # Expressions in the name don't seem to get resolved
-          #name: ci-artifacts-galleon-template-raw-{{job.container.id}}
           name: ci-artifacts
-          path: artifacts.zip
-      - uses: actions/upload-artifact@v1
-        with:
-          # Expressions in the name don't seem to get resolved
-          #name: ci-artifacts-galleon-template-raw-{{job.container.id}}
-          name: ${{env.TEST_VARIABLE}}
           path: artifacts.zip
 
